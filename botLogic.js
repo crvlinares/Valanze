@@ -230,14 +230,26 @@ Tu tranquilidad es nuestra prioridad. 🔒`;
   try {
     await insertTransaction({ telegramId: userId, username, amount, description, type, category, rawText: text });
 
-    const confirmations = ["Listo.", "Anotado.", "Hecho.", "Guardado."];
-    const randomConfirm = confirmations[Math.floor(Math.random() * confirmations.length)];
+    let successMessage = '';
 
-    let detail = `S/ ${amount.toFixed(2)}`;
-    if (type === 'gasto' && category) detail += ` en ${category}`;
-    if (description) detail += ` · ${description}`;
+    if (type === 'ingreso') {
+      const incConfirmations = ["Ingreso anotado.", "Listo, entró a tu cuenta.", "Anotado como ingreso.", "Hecho, ya sumó a tu balance."];
+      const randomIncConfirm = incConfirmations[Math.floor(Math.random() * incConfirmations.length)];
 
-    const successMessage = `${randomConfirm}\n${detail}`;
+      let detail = `S/ ${amount.toFixed(2)}`;
+      if (description) detail += ` · ${description}`;
+
+      successMessage = `${randomIncConfirm}\n${detail}`;
+    } else {
+      const expConfirmations = ["Listo.", "Anotado.", "Hecho.", "Guardado."];
+      const randomExpConfirm = expConfirmations[Math.floor(Math.random() * expConfirmations.length)];
+
+      let detail = `S/ ${amount.toFixed(2)}`;
+      if (category) detail += ` en ${category}`;
+      if (description) detail += ` · ${description}`;
+
+      successMessage = `${randomExpConfirm}\n${detail}`;
+    }
 
     await bot.sendMessage(chatId, successMessage, {
       parse_mode: 'Markdown',

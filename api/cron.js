@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     for (const user of uniqueUsers) {
       if (user.telegram_id) {
         try {
-          const message = `🌙 ¡Buenas noches, ${user.telegram_username || 'amigo'}!\n\nPara que no se te escape ni un sol, ¿tuviste algún gasto el día de hoy que olvidaste registrar?\n\n👉 Solo escríbelo aquí abajo (ej. \`cena 20\`). Si no gastaste nada, ¡felicidades por el ahorro! 🎉`;
+          const message = `Si hoy moviste dinero, puedes anotarlo aquí.`;
           
           await bot.sendMessage(user.telegram_id, message, { parse_mode: 'Markdown' });
           sentCount++;
